@@ -24,6 +24,7 @@ class RegistrationRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users',
+            'username' => 'required|string|unique:users',
             'password' => [
                 'required',
                 'string',
@@ -39,6 +40,8 @@ class RegistrationRequest extends FormRequest
             'email.required' => 'Email is required.',
             'email.unique' => 'Email already exists.',
             'email.email' => 'Email must be a valid email address.',
+            'username.required' => 'Username is required.',
+            'username.unique' => 'Username already exists.',
             'password.min' => 'Password must be at least 8 characters.',
             'password.mixedCase' => 'Password must contain at least one uppercase and one lowercase letter.',
             'password.numbers' => 'Password must contain at least one number.',
