@@ -35,8 +35,8 @@ class AuthController extends Controller
         return response()->json(
             [
                 'message' => 'User created successfully.',
-                'status'  => 201
-            ]
+            ],
+                201
         );
     }
 
@@ -57,8 +57,8 @@ class AuthController extends Controller
             return response()->json(
                 [
                     'message' => 'Invalid credentials.',
-                    'status'  => 401
-                ]
+                ],
+                    401
             );
         }
 
@@ -68,9 +68,8 @@ class AuthController extends Controller
             [
                 'message'      => 'Login successful.',
                 'access_token' => $token,
-                'token_type'   => 'Bearer',
-                'status'       => 200
-            ]
+                'token_type'   => 'Bearer'
+            ],
         );
     }
 }

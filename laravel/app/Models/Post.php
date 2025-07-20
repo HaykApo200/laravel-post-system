@@ -20,10 +20,11 @@ class Post extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'description',
-        'image',
-        'video',
-        'comments'
+        'title',
+        'body',
+        'images',
+        'videos',
+        'comments_enabled'
     ];
 
     /**
@@ -43,7 +44,9 @@ class Post extends Model
     protected function casts(): array
     {
         return [
-
+            'images' => 'array',
+            'videos' => 'array',
+            'comments_enabled' => 'boolean'
         ];
     }
 
