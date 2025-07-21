@@ -1,4 +1,4 @@
-# 🌐 Project Name: Laracircle
+# 🌐 Laravel post system
 
 A simple social media-style web application built with **Laravel**, **Sanctum**, **Docker**, and **MySQL**. Users can register, login, create posts, like, and comment on each other’s posts.
 
@@ -32,5 +32,5 @@ A simple social media-style web application built with **Laravel**, **Sanctum**,
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/laracircle.git
-cd laracircle
+git clone https://github.com/HaykApo200/laravel-post-system.git
+cd laravel-post-system
