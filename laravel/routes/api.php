@@ -9,6 +9,9 @@ Route::post('/signup', [AuthController::class, 'register'] )->name('register');
 Route::post('/login', [AuthController::class, 'login'] )->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/post', [PostController::class, 'uploadMedia']);
-    Route::post('/comment/{post}', [PostController::class, 'commentOnPost']);
+    Route::post('/logout', [AuthController::class, 'logout'] )->name('logout');
+
+    Route::post('/post', [PostController::class, 'uploadMedia'])->name('uploadMedia');
+    Route::post('/comment/{post}', [PostController::class, 'commentOnPost'])->name('commentOnPost');
+
 });

@@ -12,6 +12,12 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    /**
+    * Upload media files (images and videos) and create a post associated with the authenticated user.
+    *
+    * @param  PostRequest  $request  Validated request containing post data.
+    * @return JsonResponse
+    */
     public function uploadMedia(PostRequest $request): JsonResponse
     {
         $post = $request->validated();
@@ -60,6 +66,13 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Add a comment to a specific post by the authenticated user.
+     *
+     * @param  Request  $request  Request object containing the comment data.
+     * @param  int  $postId  ID of the post to comment on.
+     * @return JsonResponse
+     */
     public function commentOnPost(Request $request,int $postId): JsonResponse
     {
           $comment = $request->validate([
