@@ -25,9 +25,9 @@ class PostRequest extends FormRequest
             'title'             => 'sometimes|nullable|string',
             'body'              => 'sometimes|nullable|string',
             'images'            => 'sometimes|nullable|array',
-            'images.*'          => 'sometimes|nullable|string',
+            'images.*'          => 'sometimes|nullable|file|mimes:jpg,jpeg,png,gif,webp|max:5120',
             'videos'            => 'sometimes|nullable|array',
-            'videos.*'          => 'sometimes|nullable|string',
+            'videos.*'          => 'sometimes|nullable|file|mimes:mp4,mov,avi,webm|max:51200',
             'comments_enabled'  => 'sometimes|nullable|boolean'
         ];
     }

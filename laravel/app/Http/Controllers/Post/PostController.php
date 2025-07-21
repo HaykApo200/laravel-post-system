@@ -23,11 +23,34 @@ class PostController extends Controller
         }
 
         $post = FieldChecker::removeNulls($post);
-//        if ($post->type === 'image') {
-//            $post['url'] = $request->file('file')->store('public/images');
-//        } else if ($post->type === 'video') {
-//            $post['url'] = $request->file('file')->store('public/videos');
-//        } else {}
+
+        $imagePaths = [];
+        $videoPaths = [];
+
+        // Handle images upload
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('images', 'public');  // saves to storage/app/public/images
+                $imagePaths[] = $path;                      // save relative path like 'images/img1.jpg'
+            }
+        }
+
+        // Handle videos upload
+        if ($request->hasFile('videos')) {
+            foreach ($request->file('videos') as $video) {
+                $path = $video->store('videos', 'public');  // saves to storage/app/public/videos
+                $videoPaths[] = $path;                      // save relative path like 'videos/video1.mp4'
+            }
+        }
+
+        // Add file paths to the post data
+        if (!empty($imagePaths)) {
+            $post['images'] = $imagePaths;
+        }
+
+        if (!empty($videoPaths)) {
+            $post['videos'] = $videoPaths;
+        }
 
         Auth::user()->posts()->create($post);
 
