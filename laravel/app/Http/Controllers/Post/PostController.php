@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostRequest;
+use App\Models\Comment;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\FieldChecker;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -30,20 +32,19 @@ class PostController extends Controller
         // Handle images upload
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('images', 'public');  // saves to storage/app/public/images
-                $imagePaths[] = $path;                      // save relative path like 'images/img1.jpg'
+                $path = $image->store('images', 'public');
+                $imagePaths[] = $path;
             }
         }
 
         // Handle videos upload
         if ($request->hasFile('videos')) {
             foreach ($request->file('videos') as $video) {
-                $path = $video->store('videos', 'public');  // saves to storage/app/public/videos
-                $videoPaths[] = $path;                      // save relative path like 'videos/video1.mp4'
+                $path = $video->store('videos', 'public');
+                $videoPaths[] = $path;
             }
         }
 
-        // Add file paths to the post data
         if (!empty($imagePaths)) {
             $post['images'] = $imagePaths;
         }
@@ -57,5 +58,22 @@ class PostController extends Controller
         return response()->json([
             'message' => 'Media uploaded successfully.'
         ]);
+    }
+
+    public function commentOnPost(Request $request,int $postId): JsonResponse
+    {
+          $comment = $request->validate([
+              'comment' => 'required'
+          ]);
+
+          $comment['user_id'] = Auth::id();
+          $comment['post_id'] = $postId;
+
+          Comment::create($comment);
+          return response()->json([
+              'message' => 'Comment posted successfully.'
+          ],
+              201
+          );
     }
 }
