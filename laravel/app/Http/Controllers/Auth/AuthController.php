@@ -72,4 +72,17 @@ class AuthController extends Controller
             ],
         );
     }
+
+    /**
+     * Logout user, delete access token,
+     *
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json([
+            'message' => 'Logout successful.'
+        ]);
+    }
 }
