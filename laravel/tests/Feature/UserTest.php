@@ -12,17 +12,18 @@ class UserTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function signup_test(): void
+    public function test_signup(): void
     {
         $response = $this->post('/signup',
             [
-                'username'              => 'test',
-                'email'                 => 'test@gmail.com',
-                'password'              => 'Test2Test!',
+                'username' => 'test',
+                'email' => 'test@gmail.com',
+                'password' => 'Test2Test!',
                 'password_confirmation' => 'Test2Test!',
             ]
         );
 
-        $response->assertStatus(201);
+        $response->assertStatus(201)
+                 ->assertJson(['message' => 'User created successfully.']);
     }
 }

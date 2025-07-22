@@ -73,7 +73,7 @@ class PostController extends Controller
      * @param  int  $postId  ID of the post to comment on.
      * @return JsonResponse
      */
-    public function commentOnPost(Request $request,int $postId): JsonResponse
+    public function commentOnPost(Request $request, int $postId): JsonResponse
     {
           $comment = $request->validate([
               'comment' => 'required'
@@ -88,5 +88,33 @@ class PostController extends Controller
           ],
               201
           );
+    }
+
+    /**
+     * Delete post.
+     *
+     * @param  Request  $request  Request object.
+     * @param  int  $postId  ID of the post to comment on.
+     * @return JsonResponse
+     */
+    public function deletePost(Request $request, int $postId): JsonResponse
+    {
+        $post = Auth::user()->posts()->where('id', $postId)->first();
+
+        if (! $post) {
+            return response()->json([
+                'message' => 'Post not found'
+            ],
+                404
+            );
+        }
+
+        $post->delete();
+
+        return response()->json([
+            'message' => 'Post deleted successfully.'
+        ],
+             204
+        );
     }
 }
