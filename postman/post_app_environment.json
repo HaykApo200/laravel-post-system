@@ -1,0 +1,21 @@
+{
+	"id": "bdc2b11f-40bd-4032-9f6d-806e7a3e0dcf",
+	"name": "video-streamer",
+	"values": [
+		{
+			"key": "HOST",
+			"value": "http://localhost:8080",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "AUTH_TOKEN",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-07-22T14:46:19.842Z",
+	"_postman_exported_using": "Postman/11.54.6"
+}
