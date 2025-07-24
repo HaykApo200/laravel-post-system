@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\PostRequest;
 use App\Models\Comment;
+use App\Models\Like;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\FieldChecker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -82,6 +84,24 @@ class PostController extends Controller
           $comment['user_id'] = Auth::id();
           $comment['post_id'] = $postId;
 
+          if (!DB::table('posts')->where('id', $postId)->exists()) {
+              return response()->json(
+                  [
+                    'message' => 'Post not found.'
+                  ],
+                  404
+              );
+          }
+
+          if (!DB::table('posts')->select('comment_enabled')->where('id', $postId)) {
+              return response()->json(
+                  [
+                    'message' => 'Comments are disabled for this post.'
+                  ],
+                  403
+              );
+          }
+
           Comment::create($comment);
           return response()->json([
               'message' => 'Comment posted successfully.'
@@ -115,6 +135,34 @@ class PostController extends Controller
             'message' => 'Post deleted successfully.'
         ],
              204
+        );
+    }
+
+    /**
+     * Like post.
+     *
+     * @param  Request  $request  Request object.
+     * @param  int  $postId  ID of the post to like on.
+     * @return JsonResponse
+     */
+    public function likeOnPost(Request $request, int $postId): JsonResponse
+    {
+        $like['user_id'] = Auth::id();
+        $like['post_id'] = $postId;
+
+        if (DB::table('likes')->where('user_id', $like['user_id'])->where('post_id', $postId)->exists()) {
+            return response()->json(
+                [
+                    'message' => 'You already liked this post.'
+                ]
+            );
+        }
+
+        Like::create($like);
+        return response()->json(
+            [
+                'message' => 'Like post added successfully.'
+            ]
         );
     }
 }

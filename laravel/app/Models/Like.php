@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Post extends Model
+class Like extends Model
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
@@ -21,11 +20,8 @@ class Post extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'title',
-        'body',
-        'images',
-        'videos',
-        'comments_enabled'
+        'user_id',
+        'post_id'
     ];
 
     /**
@@ -45,9 +41,7 @@ class Post extends Model
     protected function casts(): array
     {
         return [
-            'images' => 'array',
-            'videos' => 'array',
-            'comments_enabled' => 'boolean'
+
         ];
     }
 
@@ -56,28 +50,8 @@ class Post extends Model
      *
      * @return BelongsTo
      */
-    public function user(): BelongsTo
+    public function post(): BelongsTo
     {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the comments for the post.
-     *
-     * @return HasMany
-     */
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    /**
-    * Get the likes for the post.
-    *
-    * @return HasMany
-    */
-    public function likes(): HasMany
-    {
-        return $this->hasMany(Like::class);
+        return $this->belongsTo(Post::class);
     }
 }
